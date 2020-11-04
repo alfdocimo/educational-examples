@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const Types = {
   FETCH_USERS_STARTED: "FETCH_USERS_STARTED",
   FETCH_USERS_SUCCESSFUL: "FETCH_USERS_SUCCESSFUL",
@@ -30,12 +32,15 @@ const fetchUsersInit = () => {
   return async function (dispatch) {
     dispatch(fetchUsersStarted());
 
-    return fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then(
-        (users) => dispatch(fetchUsersSuccessful(users)),
-        () => dispatch(fetchUsersError())
-      );
+    return axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        const { data } = response;
+        dispatch(fetchUsersSuccessful(data));
+      })
+      .catch(() => {
+        dispatch(fetchUsersError());
+      });
   };
 };
 

@@ -16,7 +16,7 @@ export default function Actions() {
   return (
     <div className="flex-center">
       <h1>User Fetcher 🔎</h1>
-      <button onClick={handleOnClick}>fetch users 👥</button>
+      <button data-testid="fetch-users-btn" onClick={handleOnClick}>fetch users 👥</button>
       <h3>Search status: {status}</h3>
       {users &&
         users.map(({ name, username, phone }) => (
